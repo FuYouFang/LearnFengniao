@@ -1,6 +1,7 @@
 import Foundation
 import CommandLineKit
 import Rainbow
+import FengNiaoKit
 
 //print("Hello, world!")
 
@@ -61,7 +62,7 @@ let fileExtensions = fileExtensionsOption.value ?? ["swift", "m", "mm", "xib", "
 
 
 
-
+Foo().bar();
 
 
 

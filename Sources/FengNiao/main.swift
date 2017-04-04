@@ -62,7 +62,6 @@ let fileExtensions = fileExtensionsOption.value ?? ["swift", "m", "mm", "xib", "
 
 
 
-Foo().bar();
 
 
 

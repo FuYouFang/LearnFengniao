@@ -13,6 +13,7 @@ protocol StringSearcher {
 }
 
 protocol RegexStringSearcher: StringSearcher {
+    var extensions: [String] { get }
     var patterns: [String] { get }
 }
 
@@ -33,11 +34,47 @@ extension RegexStringSearcher {
                 // 需要将 String 转换成 NSString
                 let extracted = NSString(string: content).substring(with: range)
                 
-                result.insert(extracted.plainName)
+                result.insert(extracted.plainName(extensions: extensions))
             }
         }
         return result
         
     }
 }
+
+struct SwiftSearcher: RegexStringSearcher {
+    let extensions: [String]
+    let patterns = ["\"(.+?)\""]
+}
+
+struct ObjeCSearcher: RegexStringSearcher {
+    let extensions: [String]
+    let patterns = ["@\"(.+?)\"", "\"(.+?)\""]
+}
+
+struct XibSearcher: RegexStringSearcher {
+    let extensions: [String]
+    let patterns = ["image name=\"(.+?)\""]
+}
+
+struct GeneralSearcher: RegexStringSearcher {
+    let extensions: [String]
+    var patterns: [String] {
+        if extensions.isEmpty {
+            return []
+        }
+        
+        let joined = extensions.joined(separator: "|")
+        return ["\"(.+?)\\.(\(joined))\""]
+        
+    }
+}
+
+
+
+
+
+
+
+
 
